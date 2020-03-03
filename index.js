@@ -31,10 +31,10 @@ if (process.env.NODE_ENV === "production") {
   app.use(limiter);
 }
 //import routes
-const hello = require("./routes/api/hello");
+const customers = require("./routes/api/customers");
 
 //Use routes
-app.use("/api/hello", hello);
+app.use("/api/customers", customers);
 
 app.listen(port);
 console.log("Server listening on " + port); // eslint-disable-line no-console
