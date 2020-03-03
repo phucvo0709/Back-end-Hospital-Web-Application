@@ -15,6 +15,16 @@ const RoomSchema = Schema({
       type: Schema.Types.ObjectId,
       ref: "customers"
     }
+  ],
+  currentCustomer: {
+    type: Schema.Types.ObjectId,
+    ref: "customers"
+  },
+  finishedCustomers: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "customers"
+    }
   ]
 });
 
