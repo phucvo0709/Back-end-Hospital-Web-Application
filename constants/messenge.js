@@ -1,0 +1,21 @@
+module.exports = Object.freeze({
+  EMAIL_INVALID: "Email không hợp lệ",
+  EMAIL_REQUIRED: "Email không được để trống",
+  EMAIL_ALREADY_EXISTS: "Email đã tồn tại trên hệ thống",
+  EMAIL_NOT_FOUND: "Không tìm thấy email này trên hệ thống",
+  PASSWORD_REQUIRED: "Mật khẩu không được để trống",
+  PASSWORD_INCORRECT: "Mật khẩu không chính xác",
+  PASSWORD_LENGTH: "Mật khẩu phải có ít nhất 6 ký tự",
+  PASSWORD_CONFIRM_REQUIRED: "Nhập lại mật khẩu không được để trống",
+  PASSWORD_CONFIRM_INCORRECT: "Nhập lại mật khẩu không trùng khớp",
+  SUC_CHANGE_PASSWORD: "Đổi mật khẩu thành công",
+  NAME_REQUIRED: "Tên không được để trống",
+  NAME_LENGTH: "Tên phải có từ 2 đến 30 ký tự",
+  SLUG_REQUIRED: "Tên người dùng không được để trống",
+  SLUG_LENGTH: "Tên người dùng phải có từ 2 đến 30 ký tự",
+  SLUG_ALREADY_EXISTS: "Tên người dùng đã có người sử dụng",
+  TEXT_REQUIRED: "Nội dung nhập không được để trống",
+  TEXT_LENGTH: "Nội dung nhập phải có ít nhất 1 ký tự",
+  ERR_TOKEN: "Yêu cầu đã hết hạn hoặc không tồn tại",
+  ERR_AUTH: "Lỗi bảo mật"
+});
