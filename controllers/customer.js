@@ -1,5 +1,5 @@
 const Customer = require("./../models/Customer");
-const { next, validationResult } = require("express-validator");
+const { validationResult } = require("express-validator");
 
 exports.getCustomers = async (req, res) => {
   try {

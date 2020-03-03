@@ -16,7 +16,11 @@ const limiter = rateLimit({
 
 //Connect Mongodb
 mongoose
-  .connect(mongoDbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(mongoDbUrl, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false
+  })
   .then(db => {
     console.log("MONGO connected");
   })
@@ -32,9 +36,11 @@ if (process.env.NODE_ENV === "production") {
 }
 //import routes
 const customers = require("./routes/api/customers");
+const rooms = require("./routes/api/rooms");
 
 //Use routes
 app.use("/api/customers", customers);
+app.use("/api/rooms", rooms);
 
 app.listen(port);
 console.log("Server listening on " + port); // eslint-disable-line no-console
