@@ -14,4 +14,7 @@ router
   .put("/:id", [middlewareRoom.putRoom], controllerRoom.putRoom)
   .delete("/:id", controllerRoom.deleteRoom);
 
+// @route api/customers/:id/:idCustomer
+router.post("/:id/:customerId", controllerRoom.addCustomerToRoom);
+
 module.exports = router;

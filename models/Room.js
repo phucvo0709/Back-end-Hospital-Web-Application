@@ -10,10 +10,12 @@ const RoomSchema = Schema({
     type: Number,
     required: false
   },
-  customer: {
-    type: Schema.Types.ObjectId,
-    ref: "customers"
-  }
+  customers: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "customers"
+    }
+  ]
 });
 
 module.exports = mongoose.model("rooms", RoomSchema);
