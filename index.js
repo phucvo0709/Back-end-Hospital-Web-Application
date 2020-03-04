@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+const http = require("http").Server(app);
 const rateLimit = require("express-rate-limit");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -27,9 +28,9 @@ mongoose
   .catch(error => console.log(error));
 
 // Body parser
-app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors());
 app.use(express.json({ limit: "300kb" })); // body-parser defaults to a body size limit of 100kb
 if (process.env.NODE_ENV === "production") {
   app.use(limiter);
@@ -42,5 +43,6 @@ const rooms = require("./routes/api/rooms");
 app.use("/api/customers", customers);
 app.use("/api/rooms", rooms);
 
-app.listen(port);
-console.log("Server listening on " + port); // eslint-disable-line no-console
+http.listen(port, function() {
+  console.log("Server listening on " + port);
+});
