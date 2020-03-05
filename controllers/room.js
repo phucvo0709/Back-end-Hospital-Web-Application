@@ -6,7 +6,12 @@ const isEmpty = require("../validation/is-empty");
 exports.getRooms = async (req, res) => {
   try {
     const rooms = await Room.find()
-      .populate("customers")
+      .populate({
+        path: "customers",
+        populate: {
+          path: "rooms"
+        }
+      })
       .populate("currentCustomer")
       .populate("finishedCustomers")
       .sort({ createdAt: -1 });
@@ -20,7 +25,14 @@ exports.getRooms = async (req, res) => {
 exports.getRoom = async (req, res) => {
   try {
     const room = await Room.findById(req.params.id)
-      .populate("customers")
+      .populate({
+        path: "customers",
+        populate: {
+          path: "historyInRooms",
+          select: "name"
+        }
+      })
+      .populate("rooms")
       .populate("currentCustomer")
       .populate("finishedCustomers");
     // Check for ObjectId format and room
@@ -103,7 +115,13 @@ exports.addCustomerToRoom = async (req, res) => {
 
   try {
     const room = await Room.findById(req.body.id)
-      .populate("customers")
+      .populate({
+        path: "customers",
+        populate: {
+          path: "historyInRooms",
+          select: "name"
+        }
+      })
       .populate("currentCustomer")
       .populate("finishedCustomers");
     // Check for ObjectId format and post
@@ -125,12 +143,25 @@ exports.addCustomerToRoom = async (req, res) => {
     if (customerisInRoom) {
       return res.status(400).json({ msg: "Customer existing in this room" });
     } else {
+      customer.historyInRooms = room._id;
+      customer.save();
+
       await Room.findByIdAndUpdate(
         req.body.id,
-        { $push: { customers: req.body.idCustomer } },
+        {
+          $push: {
+            customers: req.body.idCustomer
+          }
+        },
         { new: true }
       )
-        .populate("customers")
+        .populate({
+          path: "customers",
+          populate: {
+            path: "historyInRooms",
+            select: "name"
+          }
+        })
         .populate("currentCustomer")
         .populate("finishedCustomers")
         .then(room => res.send(room))
@@ -150,7 +181,13 @@ exports.addCustomerToCurrentProcessing = async (req, res) => {
 
   try {
     const room = await Room.findById(req.body.id)
-      .populate("customers")
+      .populate({
+        path: "customers",
+        populate: {
+          path: "historyInRooms",
+          select: "name"
+        }
+      })
       .populate("currentCustomer")
       .populate("finishedCustomers");
 
@@ -184,7 +221,13 @@ exports.addCustomerToCurrentProcessing = async (req, res) => {
         },
         { new: true }
       )
-        .populate("customers")
+        .populate({
+          path: "customers",
+          populate: {
+            path: "historyInRooms",
+            select: "name"
+          }
+        })
         .populate("currentCustomer")
         .populate("finishedCustomers")
         .then(room => res.send(room))
@@ -202,7 +245,13 @@ exports.addCustomerToCurrentProcessing = async (req, res) => {
             },
             { new: true }
           )
-            .populate("customers")
+            .populate({
+              path: "customers",
+              populate: {
+                path: "historyInRooms",
+                select: "name"
+              }
+            })
             .populate("currentCustomer")
             .populate("finishedCustomers")
             .then(room => res.send(room))
@@ -221,7 +270,13 @@ exports.addCustomerToCurrentProcessing = async (req, res) => {
             },
             { new: true }
           )
-            .populate("customers")
+            .populate({
+              path: "customers",
+              populate: {
+                path: "historyInRooms",
+                select: "name"
+              }
+            })
             .populate("currentCustomer")
             .populate("finishedCustomers")
             .then(room => res.send(room))

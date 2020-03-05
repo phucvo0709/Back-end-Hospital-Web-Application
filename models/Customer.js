@@ -9,7 +9,13 @@ const CustomerSchema = Schema({
   createdAt: {
     type: Date,
     default: Date.now
-  }
+  },
+  historyInRooms: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "rooms"
+    }
+  ]
 });
 
 module.exports = mongoose.model("customers", CustomerSchema);
