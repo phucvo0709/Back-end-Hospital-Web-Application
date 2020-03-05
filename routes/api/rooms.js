@@ -14,14 +14,14 @@ router
   .put("/:id", [middlewareRoom.putRoom], controllerRoom.putRoom)
   .delete("/:id", controllerRoom.deleteRoom);
 
-// @route api/customers/addCustomerToRoom
+// @route api/customers/add-customer-to-room
 router.post(
-  "/add-customer",
+  "/add-customer-to-room",
   [middlewareRoom.addCustomerToRoom],
   controllerRoom.addCustomerToRoom
 );
 
-// @route api/customers/addCustomerToRoom
+// @route api/customers/add-customer-processing
 router.post(
   "/add-customer-processing",
   [middlewareRoom.addCustomerToCurrentProcessing],

@@ -19,8 +19,10 @@ exports.getRooms = async (req, res) => {
 
 exports.getRoom = async (req, res) => {
   try {
-    const room = await Room.findById(req.params.id);
-
+    const room = await Room.findById(req.params.id)
+      .populate("customers")
+      .populate("currentCustomer")
+      .populate("finishedCustomers");
     // Check for ObjectId format and room
     if (!req.params.id.match(/^[0-9a-fA-F]{24}$/) || !room) {
       return res.status(404).json({ msg: "Room not found" });
@@ -131,7 +133,6 @@ exports.addCustomerToRoom = async (req, res) => {
         .populate("customers")
         .populate("currentCustomer")
         .populate("finishedCustomers")
-
         .then(room => res.send(room))
         .catch(err => res.status(500).send(err));
     }
