@@ -1,7 +1,11 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+// const http = require("http").Server(app);
 const http = require("http").Server(app);
+const io = require("socket.io").listen(http);
+require("./socket")(io);
+
 const rateLimit = require("express-rate-limit");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
