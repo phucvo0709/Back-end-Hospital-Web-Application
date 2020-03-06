@@ -76,13 +76,22 @@ exports.putRoom = async (req, res) => {
   try {
     await Room.findByIdAndUpdate(
       req.params.id,
-      { $set: req.body },
-      { new: true },
-      function(err, room) {
-        if (err) return res.status(404).json({ msg: "Room not found" });
-        res.send(room);
-      }
-    );
+      {
+        $set: req.body
+      },
+      { new: true }
+    )
+      .populate({
+        path: "customers",
+        populate: {
+          path: "historyInRooms",
+          select: "name"
+        }
+      })
+      .populate("currentCustomer")
+      .populate("finishedCustomers")
+      .then(room => res.send(room))
+      .catch(err => res.status(500).send(err));
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
