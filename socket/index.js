@@ -1,16 +1,14 @@
 exports = module.exports = function(io) {
   io.sockets.on("connection", function(socket) {
-    console.log("a user connected");
+    console.log(`a device ${socket.id} connected`);
     socket.on("newRooms", function() {
-      console.log("new rooms");
-      io.emit("haveNewRooms");
+      io.emit("haveNewRooms", socket.id);
     });
     socket.on("newCustomers", function() {
-      console.log("new customers");
-      io.emit("haveNewCustomers");
+      io.emit("haveNewCustomers", socket.id);
     });
     socket.on("disconnect", function() {
-      console.log("user disconnected");
+      console.log(`device ${socket.id} disconnected`);
     });
   });
 };
